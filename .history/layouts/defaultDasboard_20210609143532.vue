@@ -1,0 +1,89 @@
+<template>
+  <div>
+    <setting />
+    <client-only>
+      <div class="snowflakes">
+        <div class="snowflake" v-for="(item, i) in 20" :index="i" :key="i">
+          ❅
+        </div>
+      </div>
+      <page-header-login v-if="$auth.user"></page-header-login>
+      <page-header-logout v-else></page-header-logout>
+      <Nuxt />
+      <page-body></page-body>
+    </client-only>
+  </div>
+</template>
+
+<script>
+import Setting from '~/components/section/setting.vue'
+import HeaderLogout from '~/components/header/HeaderLogout.vue'
+import HeaderLogin from '~/components/header/HeaderLogin.vue'
+import Body from '~/layouts/Body.vue'
+export default {
+  components: {
+    'page-header-logout': HeaderLogout,
+    'page-header-login': HeaderLogin,
+    'page-body': Body,
+    Setting,
+  },
+  data() {
+    return {}
+  },
+  mounted() {
+    if (this.$auth.user) {
+      this.$store.dispatch('player/getPlayerDetail')
+    }
+  },
+}
+</script>
+
+<style>
+html {
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.button--green {
+  display: inline-block;
+  border-radius: 4px;
+  border: 1px solid #dbcd04;
+  color: #dbcd04;
+  text-decoration: none;
+  padding: 10px 30px;
+}
+
+.button--green:hover {
+  color: #fff;
+  background-color: #dbcd04;
+}
+
+.button--grey {
+  display: inline-block;
+  border-radius: 4px;
+  border: 1px solid #35495e;
+  color: #35495e;
+  text-decoration: none;
+  padding: 10px 30px;
+  margin-left: 15px;
+}
+
+.button--grey:hover {
+  color: #fff;
+  background-color: #35495e;
+}
+</style>
